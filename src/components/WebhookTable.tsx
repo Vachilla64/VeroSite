@@ -10,7 +10,7 @@ export default function WebhookTable() {
   ];
 
   return (
-    <div className="bg-surface rounded-[32px] shadow-soft overflow-hidden">
+    <div className="bg-surface rounded-[32px] shadow-card border border-hairline overflow-hidden">
       <div className="p-6 md:p-8 border-b border-hairline">
         <h3 className="font-bold text-ink">Recent Webhook Deliveries</h3>
         <p className="text-xs text-slate mt-1">Endpoint: https://api.yourplatform.com/vero-webhooks</p>

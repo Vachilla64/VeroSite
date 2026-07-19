@@ -17,7 +17,11 @@
   --radius-2xl: 24px;
   --radius-3xl: 32px;
   --radius-pill: 9999px;
-  --shadow-soft: 0 20px 50px rgba(43,52,69,0.06), 0 4px 12px rgba(43,52,69,0.04);
+  --shadow-app: 0 30px 70px rgba(43,52,69,0.14), 0 6px 16px rgba(43,52,69,0.06);
+  --shadow-card: 0 20px 50px rgba(43,52,69,0.06), 0 4px 12px rgba(43,52,69,0.04);
+  --shadow-card-sm: 0 12px 30px rgba(43,52,69,0.06);
+  --shadow-card-xs: 0 8px 20px rgba(43,52,69,0.05);
+  --shadow-btn-green: 0 12px 28px rgba(0,200,83,0.28);
 }
 
 @layer base {

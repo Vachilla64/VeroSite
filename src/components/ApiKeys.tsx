@@ -12,7 +12,7 @@ export default function ApiKeys() {
   };
 
   return (
-    <div className="bg-surface rounded-[32px] p-6 md:p-8 shadow-soft flex flex-col justify-between">
+    <div className="bg-surface rounded-[32px] p-6 md:p-8 shadow-card border border-hairline flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-ink">Live API Keys</h3>

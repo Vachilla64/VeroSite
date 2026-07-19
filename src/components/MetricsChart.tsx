@@ -2,7 +2,7 @@ import { BarChart3 } from 'lucide-react';
 
 export default function MetricsChart() {
   return (
-    <div className="bg-surface rounded-[32px] p-6 md:p-8 shadow-soft">
+    <div className="bg-surface rounded-[32px] p-6 md:p-8 shadow-card border border-hairline">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h3 className="font-bold text-ink mb-1">API Usage</h3>

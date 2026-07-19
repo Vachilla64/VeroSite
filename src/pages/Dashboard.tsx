@@ -9,11 +9,11 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-8">
         {/* Sidebar Mock */}
         <div className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-surface rounded-[32px] p-6 shadow-soft space-y-2">
+          <div className="bg-surface rounded-[32px] p-6 shadow-card space-y-2 border border-hairline">
             <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate hover:bg-canvas rounded-xl transition-colors">
               <LayoutDashboard className="w-4 h-4" /> Overview
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold bg-trust-high text-surface rounded-xl shadow-md">
+            <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold bg-trust-high text-white rounded-xl shadow-btn-green">
               <Key className="w-4 h-4" /> API Keys
             </button>
             <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate hover:bg-canvas rounded-xl transition-colors">
