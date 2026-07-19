@@ -59,7 +59,7 @@ export default function Hero() {
   const currentProfile = PROFILES[profileIndex];
   
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     
     if (phase === 'typing') {
       const target = currentProfile.nuban;
