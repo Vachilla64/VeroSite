@@ -7,9 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <div className="col-span-1 md:col-span-1">
           <Link to="/" className="flex items-center gap-2 mb-4">
-            <div className="bg-risk-critical rounded-lg p-1">
-              <ShieldCheck className="w-4 h-4 text-surface" />
-            </div>
+            <img src="/vero-logo.png" alt="Vero Logo" className="w-6 h-6" />
             <span className="text-lg font-bold tracking-tight text-ink">Vero</span>
           </Link>
           <p className="text-sm text-slate mb-6">
