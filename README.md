@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Vero Developer Portal & B2B Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This repository contains **VeroSite**, the B2B developer portal and dashboard for the Vero Trust Network.
 
-Currently, two official plugins are available:
+Vero is an integrable API that intercepts Nigerian bank transfers to provide a 0 to 100 Trust Score and an AI-driven risk explanation before money is sent. This portal allows enterprise customers and developers to integrate Vero into their own platforms.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
+- **API Key Management**: Secure generation and rolling of `x-api-key` credentials for server-to-server integration.
+- **Webhook Dashboard**: Real-time mock dashboard for monitoring webhook deliveries (e.g., `score.calculated`, `account.flagged`).
+- **Interactive Documentation**: Comprehensive guides and cURL examples for implementing the Vero `Lookup API` and Auth flows.
+- **Premium UI**: Built with a focus on trust and reliability, using zero-trust architectural themes and a sleek design language.
 
-## React Compiler
+## 🏗 Stack
+- React + Vite
+- TypeScript
+- Tailwind CSS
+- Lucide React (Icons)
+- React Router DOM
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Local Setup
 
-## Expanding the Oxlint configuration
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+2. **Start Development Server:**
+   ```bash
+   npm run dev
+   ```
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+3. **Backend Connection:**
+   This frontend expects the main Vero backend to be running on `http://localhost:8080`. Ensure you have the `Vero` repository cloned and the backend server started.
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 🔑 Authentication
+The Developer Portal uses dual authentication:
+1. **User Login**: Standard users log in with their email/password (JWT) via the main Vero backend.
+2. **API Keys**: Once logged in, developers can generate an `x-api-key` which is used for all backend integration requests, ensuring a secure server-to-server connection.
