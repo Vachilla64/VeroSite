@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ShieldCheck, ShieldAlert, AlertTriangle, Search, Loader2, Building2, Check, X } from 'lucide-react';
+import { ChevronRight, ShieldCheck, ShieldAlert, AlertTriangle, Search, Loader2, Building2 } from 'lucide-react';
 
 const PROFILES = [
   {
@@ -51,29 +51,14 @@ const PROFILES = [
   }
 ];
 
-const BANKS = [
-  'GTBank', 'Access Bank', 'Opay', 'Moniepoint', 'Kuda', 'Zenith Bank', 'UBA', 'First Bank'
-];
-
 export default function Hero() {
   const [profileIndex, setProfileIndex] = useState(0);
   const [phase, setPhase] = useState<'typing' | 'analyzing' | 'verdict'>('typing');
   const [typedNuban, setTypedNuban] = useState('');
   
-  // Interactive State
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [showBankSelector, setShowBankSelector] = useState(false);
-  const [selectedBank, setSelectedBank] = useState('GTBank');
-  const [userProfile, setUserProfile] = useState<typeof PROFILES[0] | null>(null);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  
-  const currentProfile = userProfile || PROFILES[profileIndex];
+  const currentProfile = PROFILES[profileIndex];
   
   useEffect(() => {
-    // If user interacts, stop auto loop
-    if (isInteracting) return;
-
     let timeout: ReturnType<typeof setTimeout>;
     
     if (phase === 'typing') {
@@ -96,125 +81,52 @@ export default function Hero() {
     }
     
     return () => clearTimeout(timeout);
-  }, [phase, typedNuban, currentProfile.nuban, isInteracting]);
-
-  const handleInteractionStart = () => {
-    setIsInteracting(true);
-    if (phase === 'verdict') {
-      setPhase('typing');
-    }
-    setTypedNuban('');
-    setUserProfile(null);
-  };
-
-  const handleAnalyzeClick = () => {
-    if (typedNuban.length < 10) return;
-    setPhase('analyzing');
-    
-    // Pseudo-random verdict based on last digit
-    const lastDigit = parseInt(typedNuban.slice(-1));
-    let result;
-    if (lastDigit >= 0 && lastDigit <= 4) result = PROFILES[0]; // 50% Trusted
-    else if (lastDigit >= 5 && lastDigit <= 7) result = PROFILES[2]; // 30% Caution
-    else result = PROFILES[1]; // 20% High Risk
-    
-    // Generate a generic name based on input to make it feel real
-    const mockName = `User ${typedNuban.slice(0,4)}...`;
-    
-    setUserProfile({
-      ...result,
-      nuban: typedNuban,
-      bank: selectedBank,
-      name: mockName,
-      avatarChar: mockName.charAt(0)
-    });
-
-    setTimeout(() => {
-      setPhase('verdict');
-    }, 1500);
-  };
-
-  const resetDemo = () => {
-    setPhase('typing');
-    setTypedNuban('');
-    setUserProfile(null);
-    inputRef.current?.focus();
-  };
-
-  const closeInteractive = () => {
-    setIsInteracting(false);
-    setPhase('typing');
-    setTypedNuban('');
-    setUserProfile(null);
-  };
+  }, [phase, typedNuban, currentProfile.nuban]);
 
   return (
-    <>
-      {/* Global Focus Backdrop */}
-      <AnimatePresence>
-        {isInteracting && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-ink/70 backdrop-blur-md"
-            onClick={closeInteractive}
-          />
-        )}
-      </AnimatePresence>
-
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-24 relative z-10 overflow-hidden">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-12 items-center">
-          {/* Left Content */}
-          <div className={`max-w-2xl transition-opacity duration-500 ${isInteracting ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
-            <div className="inline-flex items-center gap-2 bg-trust-high/10 text-trust-high px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-trust-high animate-[pulse_2s_ease-in-out_infinite]"></span>
-              Live in Nigeria & Kenya
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-ink leading-[1.1] mb-6 tracking-tight">
-              Vero scores bank accounts before money leaves your platform. <br className="hidden md:block"/>
-              <span className="text-trust-high">Stop scams at checkout.</span>
-            </h1>
-            <p className="text-lg text-slate mb-8 leading-relaxed max-w-lg">
-              You get a 0 to 100 trust rating and instant fraud checks.
-              <strong className="text-ink font-semibold"> Never pay a scammer again.</strong>
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <Link to="/developer" className="flex items-center gap-2 bg-trust-high text-surface px-6 py-3.5 rounded-pill font-bold shadow-soft hover:opacity-90 transition-all hover:-translate-y-0.5">
-                Get API Keys <ChevronRight className="w-4 h-4" />
-              </Link>
-              <Link to="/docs" className="flex items-center gap-2 text-ink bg-surface shadow-sm border border-hairline px-6 py-3.5 rounded-pill font-semibold hover:border-slate/30 hover:bg-app-surface transition-colors">
-                Read Docs
-              </Link>
-            </div>
+    <section className="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-24 relative z-10 overflow-hidden">
+      <div className="grid lg:grid-cols-2 gap-16 lg:gap-12 items-center">
+        {/* Left Content */}
+        <div className="max-w-2xl transition-opacity duration-500 opacity-100">
+          <div className="inline-flex items-center gap-2 bg-trust-high/10 text-trust-high px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-trust-high animate-[pulse_2s_ease-in-out_infinite]"></span>
+            Live in Nigeria & Kenya
           </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-ink leading-[1.1] mb-6 tracking-tight">
+            Vero scores bank accounts before money leaves your platform. <br className="hidden md:block"/>
+            <span className="text-trust-high">Stop scams at checkout.</span>
+          </h1>
+          <p className="text-lg text-slate mb-8 leading-relaxed max-w-lg">
+            You get a 0 to 100 trust rating and instant fraud checks.
+            <strong className="text-ink font-semibold"> Never pay a scammer again.</strong>
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link to="/developer" className="flex items-center gap-2 bg-trust-high text-surface px-6 py-3.5 rounded-pill font-bold shadow-soft hover:opacity-90 transition-all hover:-translate-y-0.5">
+              Get API Keys <ChevronRight className="w-4 h-4" />
+            </Link>
+            <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-ink bg-surface shadow-sm border border-hairline px-6 py-3.5 rounded-pill font-semibold hover:border-slate/30 hover:bg-app-surface transition-colors">
+              Try the Web App
+            </a>
+          </div>
+        </div>
 
-          {/* Right Visuals - Interactive Verdict Mockup */}
-          <div className={`relative mt-8 lg:mt-0 perspective-1000 ${isInteracting ? 'z-50' : 'z-10'}`}>
-            {!isInteracting && (
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-trust-high/5 blur-[100px] -z-10 rounded-full"></div>
-            )}
+        {/* Right Visuals - Static Demo Mockup linked to Web App */}
+        <div className="relative mt-8 lg:mt-0 perspective-1000 z-10 group cursor-pointer">
+          <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" className="block relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-trust-high/5 blur-[100px] -z-10 rounded-full group-hover:bg-trust-high/10 transition-colors duration-500"></div>
             
+            {/* Overlay CTA on hover */}
+            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-ink/20 rounded-[40px] backdrop-blur-[2px]">
+              <div className="bg-white text-ink font-bold px-6 py-3 rounded-full shadow-lg transform scale-95 group-hover:scale-100 transition-transform duration-300">
+                Launch Web App
+              </div>
+            </div>
+
             <motion.div 
               layout
-              className={`bg-app-surface overflow-hidden flex flex-col relative transition-all duration-500 mx-auto
-                ${isInteracting 
-                  ? 'fixed inset-0 w-full h-[100dvh] rounded-none md:relative md:w-full md:max-w-[420px] md:rounded-[48px] md:h-[800px] md:border-[8px] md:border-surface md:shadow-[0_40px_100px_rgba(0,0,0,0.3)]' 
-                  : 'w-full max-w-[390px] h-[750px] rounded-[40px] border-[6px] border-surface shadow-[0_30px_70px_rgba(43,52,69,0.14),0_6px_16px_rgba(43,52,69,0.06)]'
-                }
-              `}
+              className="bg-app-surface overflow-hidden flex flex-col relative transition-all duration-500 mx-auto w-full max-w-[390px] h-[750px] rounded-[40px] border-[6px] border-surface shadow-[0_30px_70px_rgba(43,52,69,0.14),0_6px_16px_rgba(43,52,69,0.06)] group-hover:scale-[1.02]"
             >
-              {/* Close button for mobile fullscreen */}
-              {isInteracting && (
-                <button 
-                  onClick={closeInteractive}
-                  className="md:hidden absolute top-4 right-4 z-50 w-10 h-10 bg-surface/50 rounded-full flex items-center justify-center text-ink backdrop-blur-md shadow-sm border border-hairline"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-
-              {/* Status Bar (Hidden on actual mobile to avoid clashing with real status bar, but shown on desktop demo) */}
+              {/* Status Bar */}
               <div className={`h-[52px] hidden md:flex items-center justify-between px-[30px] font-semibold text-[15px] z-20 transition-colors duration-500 absolute top-0 left-0 right-0 ${phase === 'verdict' ? 'text-surface' : 'text-ink'}`}>
                 <span>9:41</span>
                 <div className="flex gap-[5px]">
@@ -225,7 +137,7 @@ export default function Hero() {
               </div>
 
               {/* Dynamic Content */}
-              <div className={`flex-1 relative ${isInteracting ? 'mt-0 pt-16 md:pt-0 md:mt-[52px]' : 'mt-[52px]'}`}>
+              <div className="flex-1 relative mt-[52px]">
                 <AnimatePresence mode="wait">
                   {phase === 'verdict' ? (
                     <motion.div 
@@ -243,7 +155,7 @@ export default function Hero() {
                         <div className="absolute -bottom-[70px] -left-[30px] w-[160px] h-[160px] rounded-full bg-surface/10 blur-sm"></div>
                         
                         <div className="flex items-center justify-between relative mt-2">
-                          <button onClick={resetDemo} className="text-surface/85 text-[15px] font-semibold hover:text-surface transition-colors cursor-pointer">‹ Back</button>
+                          <div className="text-surface/85 text-[15px] font-semibold">‹ Back</div>
                           <div className="font-black text-[15px] text-surface tracking-[0.04em]">VERO</div>
                           <div className="text-surface/85 text-[22px] font-bold">⋯</div>
                         </div>
@@ -267,7 +179,7 @@ export default function Hero() {
                       </div>
 
                       {/* Verdict Details Card */}
-                      <div className="flex-1 bg-surface flex flex-col p-[30px] overflow-y-auto">
+                      <div className="flex-1 bg-surface flex flex-col p-[30px] overflow-y-auto pointer-events-none">
                         <motion.div 
                           initial={{ y: 20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
@@ -312,16 +224,16 @@ export default function Hero() {
                           className="mt-[24px] pb-6"
                         >
                           {currentProfile.id === 'trusted' ? (
-                            <div className="relative h-[64px] rounded-[999px] bg-trust-high flex items-center shadow-[0_12px_28px_rgba(0,200,83,0.3)] cursor-pointer hover:bg-[#00E676] transition-colors">
+                            <div className="relative h-[64px] rounded-[999px] bg-trust-high flex items-center shadow-[0_12px_28px_rgba(0,200,83,0.3)]">
                               <div className="absolute left-[6px] w-[52px] h-[52px] rounded-full bg-surface flex items-center justify-center text-trust-high text-[22px] font-black">›</div>
                               <div className="flex-1 text-center text-surface font-bold text-[16px] pl-[40px]">Slide to copy details</div>
                             </div>
                           ) : (
-                            <button className={`border-none rounded-[999px] font-semibold text-[16px] font-sans p-[17px] cursor-pointer w-full text-center text-surface shadow-soft hover:opacity-90 transition-opacity ${currentProfile.id === 'high-risk' ? 'bg-risk-critical' : 'bg-ink'}`}>
+                            <div className={`border-none rounded-[999px] font-semibold text-[16px] font-sans p-[17px] w-full text-center text-surface shadow-soft ${currentProfile.id === 'high-risk' ? 'bg-risk-critical' : 'bg-ink'}`}>
                               {currentProfile.id === 'high-risk' ? 'Report this account' : 'Proceed carefully'}
-                            </button>
+                            </div>
                           )}
-                          <div className="text-center mt-[14px] text-slate text-[13px] font-semibold cursor-pointer hover:text-ink transition-colors">
+                          <div className="text-center mt-[14px] text-slate text-[13px] font-semibold">
                             {currentProfile.id === 'high-risk' ? 'Send anyway' : 'Report this account'}
                           </div>
                         </motion.div>
@@ -338,7 +250,7 @@ export default function Hero() {
                     >
                       <div className="flex items-center justify-between mb-[22px] hidden md:flex">
                         <div className="font-black text-[17px] text-ink tracking-[0.02em]">VERO</div>
-                        <div className="w-[38px] h-[38px] rounded-[12px] bg-surface flex items-center justify-center font-bold text-ink text-[15px] shadow-[0_4px_12px_rgba(43,52,69,0.06)] border border-hairline cursor-pointer" onClick={closeInteractive}>
+                        <div className="w-[38px] h-[38px] rounded-[12px] bg-surface flex items-center justify-center font-bold text-ink text-[15px] shadow-[0_4px_12px_rgba(43,52,69,0.06)] border border-hairline">
                           M
                         </div>
                       </div>
@@ -347,83 +259,38 @@ export default function Hero() {
                         Check an account<br/>before you send.
                       </div>
 
-                      {/* Interactive Bank Selector Button */}
-                      <button 
-                        onClick={() => { handleInteractionStart(); setShowBankSelector(true); }}
-                        className="flex items-center justify-between bg-surface rounded-[16px] px-[16px] py-[15px] shadow-sm border border-hairline mb-[12px] hover:border-slate/30 transition-colors"
-                      >
+                      {/* Mock Bank Selector Button */}
+                      <div className="flex items-center justify-between bg-surface rounded-[16px] px-[16px] py-[15px] shadow-sm border border-hairline mb-[12px]">
                         <div className="flex items-center gap-3">
                           <Building2 className="w-5 h-5 text-trust-high" />
-                          <span className="font-semibold text-ink text-[15px]">{selectedBank}</span>
+                          <span className="font-semibold text-ink text-[15px]">GTBank</span>
                         </div>
                         <ChevronRight className="w-5 h-5 text-slate" />
-                      </button>
+                      </div>
 
-                      {/* Interactive Input */}
-                      <div className={`flex items-center gap-[10px] bg-surface rounded-[16px] px-[16px] py-[12px] shadow-[0_12px_30px_rgba(43,52,69,0.06)] border transition-colors duration-300 ${phase === 'analyzing' ? 'border-trust-high bg-trust-high/5' : isInteracting ? 'border-trust-high ring-2 ring-trust-high/20' : 'border-hairline'}`}>
+                      {/* Animated Input */}
+                      <div className={`flex items-center gap-[10px] bg-surface rounded-[16px] px-[16px] py-[12px] shadow-[0_12px_30px_rgba(43,52,69,0.06)] border transition-colors duration-300 ${phase === 'analyzing' ? 'border-trust-high bg-trust-high/5' : 'border-hairline'}`}>
                         {phase === 'analyzing' ? (
                           <Loader2 className="w-5 h-5 text-trust-high animate-spin" />
                         ) : (
                           <Search className="w-5 h-5 text-slate" />
                         )}
                         
-                        {isInteracting ? (
-                          <input 
-                            ref={inputRef}
-                            type="tel"
-                            maxLength={10}
-                            value={typedNuban}
-                            onChange={(e) => setTypedNuban(e.target.value.replace(/\D/g, ''))}
-                            placeholder="Account Number"
-                            className="flex-1 bg-transparent border-none outline-none text-[17px] font-semibold text-ink placeholder-slate/50 h-[30px]"
-                            disabled={phase === 'analyzing'}
-                            autoFocus
-                          />
-                        ) : (
-                          <div 
-                            className="flex-1 text-[17px] font-semibold text-ink h-[30px] flex items-center cursor-text"
-                            onClick={() => { handleInteractionStart(); setTimeout(() => inputRef.current?.focus(), 100); }}
-                          >
-                            {typedNuban}
-                            {phase === 'typing' && <span className="animate-[pulse_1s_ease-in-out_infinite] font-normal text-trust-high">|</span>}
-                          </div>
-                        )}
+                        <div className="flex-1 text-[17px] font-semibold text-ink h-[30px] flex items-center">
+                          {typedNuban}
+                          {phase === 'typing' && <span className="animate-[pulse_1s_ease-in-out_infinite] font-normal text-trust-high">|</span>}
+                        </div>
                       </div>
-
-                      {/* "Analyze Risk" Button - Only shows when interacting and 10 digits entered */}
-                      <AnimatePresence>
-                        {isInteracting && typedNuban.length === 10 && phase !== 'analyzing' && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10, height: 0 }}
-                            animate={{ opacity: 1, y: 0, height: 'auto' }}
-                            exit={{ opacity: 0, y: 10, height: 0 }}
-                            className="mt-[16px]"
-                          >
-                            <button 
-                              onClick={handleAnalyzeClick}
-                              className="w-full bg-trust-high text-surface font-bold text-[16px] py-[16px] rounded-[16px] shadow-[0_8px_20px_rgba(0,200,83,0.3)] hover:bg-[#00E676] transition-colors active:scale-[0.98]"
-                            >
-                              Analyze Risk
-                            </button>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
 
                       <div className="text-[11px] font-bold tracking-[0.06em] uppercase text-slate mt-[26px] mb-[12px]">
-                        {isInteracting ? 'Suggested' : 'Recent'}
+                        Recent
                       </div>
                       
-                      <div className="flex flex-col gap-[10px] overflow-y-auto pb-6 custom-scrollbar">
+                      <div className="flex flex-col gap-[10px] overflow-hidden pb-6">
                         {PROFILES.map((prof) => (
                           <div 
                             key={prof.id} 
-                            onClick={() => {
-                              if (isInteracting && phase !== 'analyzing') {
-                                setSelectedBank(prof.bank);
-                                setTypedNuban(prof.nuban);
-                              }
-                            }}
-                            className={`flex items-center gap-[12px] bg-surface shadow-sm rounded-[16px] p-[12px] transition-all duration-300 ${prof.id === currentProfile.id && phase === 'analyzing' ? 'opacity-100 ring-2 ring-trust-high/50' : 'opacity-70'} ${isInteracting ? 'cursor-pointer hover:opacity-100' : ''}`}
+                            className={`flex items-center gap-[12px] bg-surface shadow-sm rounded-[16px] p-[12px] transition-all duration-300 ${prof.id === currentProfile.id && phase === 'analyzing' ? 'opacity-100 ring-2 ring-trust-high/50' : 'opacity-70'}`}
                           >
                             <div className={`w-[42px] h-[42px] rounded-[13px] bg-app-surface flex items-center justify-center font-bold text-[16px] ${prof.iconColor}`}>
                               {prof.avatarChar}
@@ -439,55 +306,10 @@ export default function Hero() {
                   )}
                 </AnimatePresence>
               </div>
-
-              {/* Bank Selector Slide-up Sheet */}
-              <AnimatePresence>
-                {showBankSelector && (
-                  <>
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 bg-ink/40 z-30 backdrop-blur-[2px]"
-                      onClick={() => setShowBankSelector(false)}
-                    />
-                    <motion.div 
-                      initial={{ y: '100%' }}
-                      animate={{ y: 0 }}
-                      exit={{ y: '100%' }}
-                      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                      className="absolute bottom-0 left-0 right-0 h-[70%] bg-surface rounded-t-[32px] z-40 flex flex-col shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-hairline"
-                    >
-                      <div className="flex justify-center pt-3 pb-4">
-                        <div className="w-12 h-1.5 bg-slate/20 rounded-full"></div>
-                      </div>
-                      <div className="px-6 pb-2">
-                        <h3 className="font-bold text-xl text-ink">Select Bank</h3>
-                      </div>
-                      <div className="flex-1 overflow-y-auto px-4 pb-6">
-                        {BANKS.map(bank => (
-                          <button
-                            key={bank}
-                            onClick={() => {
-                              setSelectedBank(bank);
-                              setShowBankSelector(false);
-                              setTimeout(() => inputRef.current?.focus(), 100);
-                            }}
-                            className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-app-surface transition-colors text-left"
-                          >
-                            <span className="font-semibold text-ink text-[16px]">{bank}</span>
-                            {selectedBank === bank && <Check className="w-5 h-5 text-trust-high" />}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
             </motion.div>
-          </div>
+          </a>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
