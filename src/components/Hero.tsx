@@ -111,7 +111,7 @@ export default function Hero() {
         </div>
 
         {/* Right Visuals - Static Demo Mockup linked to Web App */}
-        <div className="relative mt-8 lg:mt-0 perspective-1000 z-10 group cursor-pointer">
+        <div className="relative mt-8 lg:mt-0 z-10 group cursor-pointer">
           <a href="https://verolive.vercel.app" target="_blank" rel="noopener noreferrer" className="block relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-trust-high/5 blur-[100px] -z-10 rounded-full group-hover:bg-trust-high/10 transition-colors duration-500"></div>
             
@@ -137,7 +137,9 @@ export default function Hero() {
               </div>
 
               {/* Dynamic Content */}
-              <div className="flex-1 relative mt-[52px]">
+              {/* Offset only where the status bar actually renders (md+),
+                  otherwise mobile gets a 52px blank strip. */}
+              <div className="flex-1 relative md:mt-[52px]">
                 <AnimatePresence mode="wait">
                   {phase === 'verdict' ? (
                     <motion.div 
@@ -248,7 +250,7 @@ export default function Hero() {
                       transition={{ duration: 0.2 }}
                       className="flex-1 flex flex-col px-[26px] pb-[26px] absolute inset-0"
                     >
-                      <div className="flex items-center justify-between mb-[22px] hidden md:flex">
+                      <div className="items-center justify-between mb-[22px] hidden md:flex">
                         <div className="font-black text-[17px] text-ink tracking-[0.02em]">VERO</div>
                         <div className="w-[38px] h-[38px] rounded-[12px] bg-surface flex items-center justify-center font-bold text-ink text-[15px] shadow-[0_4px_12px_rgba(43,52,69,0.06)] border border-hairline">
                           M
