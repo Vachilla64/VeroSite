@@ -4,9 +4,11 @@
   --color-canvas: #EAF8EF;
   --color-surface: #FFFFFF;
   --color-app-surface: #F4F6F9;
-  --color-ink: #2B3445;
-  --color-slate: #A0AAB2;
-  --color-hairline: #EEF1F5;
+  --color-ink: #222B3A;
+  /* Secondary text. #A0AAB2 sat at ~2.1:1 on the mint canvas — well under
+     the 4.5:1 AA floor. This lands at ~5.3:1 and stays in the same family. */
+  --color-slate: #5B6674;
+  --color-hairline: #E3E9EE;
   --color-risk-critical: #FF4B4B;
   --color-risk-high: #FF8A00;
   --color-risk-neutral: #FFC300;
@@ -21,6 +23,9 @@
   --shadow-card: 0 20px 50px rgba(43,52,69,0.06), 0 4px 12px rgba(43,52,69,0.04);
   --shadow-card-sm: 0 12px 30px rgba(43,52,69,0.06);
   --shadow-card-xs: 0 8px 20px rgba(43,52,69,0.05);
+  /* Referenced in 26 places across 10 files but never defined, so every
+     `shadow-soft` element rendered completely flat. */
+  --shadow-soft: 0 12px 30px rgba(43,52,69,0.08), 0 3px 8px rgba(43,52,69,0.04);
   --shadow-btn-green: 0 12px 28px rgba(0,200,83,0.28);
 }
 
