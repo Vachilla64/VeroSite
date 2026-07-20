@@ -19,6 +19,7 @@ export default function Footer() {
           <h4 className="font-bold text-ink mb-4">Product</h4>
           <ul className="space-y-3">
             <li><Link to="/" className="text-sm text-slate hover:text-ink transition-colors">API</Link></li>
+            <li><a href="http://localhost:5174" target="_blank" rel="noopener noreferrer" className="text-sm text-slate hover:text-ink transition-colors">Consumer App</a></li>
             <li><Link to="/pricing" className="text-sm text-slate hover:text-ink transition-colors">Pricing</Link></li>
             <li><Link to="/" className="text-sm text-slate hover:text-ink transition-colors">Webhooks</Link></li>
             <li><Link to="/" className="text-sm text-slate hover:text-ink transition-colors">Trust Scores</Link></li>
