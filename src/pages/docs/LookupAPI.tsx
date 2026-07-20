@@ -49,8 +49,8 @@ export default function LookupAPI() {
         </div>
         <h3 className="text-xl font-bold text-ink mb-3">Evaluate Trust Score</h3>
         <p className="text-slate mb-6 leading-relaxed">
-          The core endpoint. Pass a recipient's NUBAN, bank code, and transfer amount. Returns a 0–100 Trust Score, 
-          a list of risk signals, an AI-generated plain-English explanation, and a score breakdown.
+          Pass a recipient's NUBAN, bank code, and transfer amount. Returns a 0 to 100 Trust Score, 
+          a list of risk signals, an AI-generated explanation, and a score breakdown.
           Free plan accounts are limited to <strong className="text-ink">15 calls per day</strong>.
         </p>
 
@@ -170,18 +170,18 @@ export default function LookupAPI() {
               </tr>
               <tr>
                 <td className="px-5 py-4 font-mono text-ink">critical_risk</td>
-                <td className="px-5 py-4 text-slate">—</td>
+                <td className="px-5 py-4 text-slate">N/A</td>
                 <td className="px-5 py-4 text-slate">Computed score fell below 30. Block or require manual review.</td>
               </tr>
               <tr>
                 <td className="px-5 py-4 font-mono text-ink">checksum_unverified</td>
                 <td className="px-5 py-4 text-slate">0</td>
-                <td className="px-5 py-4 text-slate">Soft signal — NUBAN checksum could not be verified (informational only).</td>
+                <td className="px-5 py-4 text-slate">NUBAN checksum could not be verified. (Informational only).</td>
               </tr>
               <tr>
                 <td className="px-5 py-4 font-mono text-ink">verified_institution</td>
                 <td className="px-5 py-4 text-slate">0</td>
-                <td className="px-5 py-4 text-slate">Positive signal — account belongs to a verified partner institution.</td>
+                <td className="px-5 py-4 text-slate">Account belongs to a verified partner institution.</td>
               </tr>
               <tr>
                 <td className="px-5 py-4 font-mono text-ink">invalid_format</td>
@@ -204,7 +204,7 @@ export default function LookupAPI() {
         <h3 className="text-xl font-bold text-ink mb-3">Submit a Report</h3>
         <p className="text-slate mb-6 leading-relaxed">
           Report a suspicious account on behalf of a user. Reports are stake-weighted and feed directly into the 
-          Trust Score engine — no manual moderation required. You can only report an account once; duplicate 
+          Trust Score engine. No manual moderation required. You can only report an account once; duplicate 
           submissions return a <code className="bg-app-surface px-1 rounded text-sm font-mono">429</code>.
         </p>
 

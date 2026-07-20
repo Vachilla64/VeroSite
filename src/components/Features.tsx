@@ -7,7 +7,7 @@ export default function Features() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-sm font-bold text-slate uppercase tracking-widest mb-4">Why Vero API?</p>
           <h2 className="text-3xl md:text-4xl font-black text-ink mb-4">Enterprise-grade fraud prevention.</h2>
-          <p className="text-lg text-slate">Built for high-volume marketplaces. We handle the risk so you can focus on growth.</p>
+          <p className="text-lg text-slate">Built for marketplaces. We handle the risk, you handle the growth.</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -16,7 +16,7 @@ export default function Features() {
               <Zap className="w-6 h-6 text-trust-high" />
             </div>
             <h3 className="text-xl font-bold text-ink mb-3">Sub-100ms latency.</h3>
-            <p className="text-slate leading-relaxed">Because fraud happens in milliseconds. Our predictive AI scores accounts in real-time without adding friction to your checkout flow.</p>
+            <p className="text-slate leading-relaxed">Fraud happens fast. Our engine scores accounts instantly. Your checkout stays exactly as fast as it was.</p>
           </div>
 
           <div className="bg-surface p-8 rounded-3xl shadow-soft hover:-translate-y-1 transition-transform duration-300">
@@ -24,7 +24,7 @@ export default function Features() {
               <TrendingDown className="w-6 h-6 text-risk-critical" />
             </div>
             <h3 className="text-xl font-bold text-ink mb-3">Cut chargebacks by 40%.</h3>
-            <p className="text-slate leading-relaxed">Identify serial scammers and high-risk bank accounts before the transfer is initiated. Protect your bottom line automatically.</p>
+            <p className="text-slate leading-relaxed">Block high-risk accounts before the transfer clears. Protect your bottom line.</p>
           </div>
 
           <div className="bg-surface p-8 rounded-3xl shadow-soft hover:-translate-y-1 transition-transform duration-300">
@@ -32,7 +32,7 @@ export default function Features() {
               <Shield className="w-6 h-6 text-risk-high" />
             </div>
             <h3 className="text-xl font-bold text-ink mb-3">Stop serial scammers.</h3>
-            <p className="text-slate leading-relaxed">Our Trust Network pools data across platforms. If an account commits fraud on one marketplace, they are instantly flagged on yours.</p>
+            <p className="text-slate leading-relaxed">Accounts flagged on one platform get blocked across the entire network. Scammers can't hide.</p>
           </div>
         </div>
       </div>

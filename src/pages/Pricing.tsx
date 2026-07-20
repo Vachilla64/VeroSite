@@ -4,8 +4,8 @@ export default function Pricing() {
   return (
     <div className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl md:text-5xl font-black text-ink mb-6">Simple pricing.<br />Massive ROI.</h1>
-        <p className="text-lg text-slate">Stop scammers before they drain your platform. Our tiered API pricing ensures you only pay for what you protect.</p>
+        <h1 className="text-4xl md:text-5xl font-black text-ink mb-6">Simple pricing.</h1>
+        <p className="text-lg text-slate">Pay for what you protect. Block fraud before it drains your platform.</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">

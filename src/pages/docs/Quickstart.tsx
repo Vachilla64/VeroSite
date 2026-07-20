@@ -7,7 +7,7 @@ export default function Quickstart() {
       <div>
         <h1 className="text-4xl font-black text-ink mb-4">Vero API Documentation</h1>
         <p className="text-lg text-slate leading-relaxed">
-          Vero's Trust Layer sits between your users and their bank transfers — scoring accounts in real-time so you can stop fraud before money leaves the platform.
+          Vero scores accounts instantly. Block fraud before money ever leaves your platform.
         </p>
       </div>
 
@@ -39,7 +39,7 @@ export default function Quickstart() {
             Pass the recipient's 10-digit NUBAN, their bank code, and the transfer amount.
           </li>
           <li>
-            <strong className="text-ink">Read the Trust Score</strong> (0–100) and act on it.
+            <strong className="text-ink">Read the Trust Score</strong> (0 to 100) and act on it.
             A score above 70 is generally safe. Below 30 triggers <code className="bg-app-surface px-1.5 py-0.5 rounded text-sm font-mono border border-hairline">critical_risk</code>.
           </li>
           <li>

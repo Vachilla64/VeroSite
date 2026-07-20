@@ -10,8 +10,8 @@ export default function Webhooks() {
         </h2>
         <p className="text-slate mb-6 leading-relaxed">
           Webhooks let Vero push real-time events to your server instead of you polling the API. 
-          Subscribe to get notified when an account you've previously checked changes risk profile drastically — 
-          for example, when a once-safe account gets heavily reported on the Trust Network by another platform.
+          Subscribe to get notified when an account you've previously checked changes risk profile. 
+          For example: a safe account gets reported by another platform on the network.
         </p>
 
         <div className="bg-risk-high/10 border border-risk-high/20 text-risk-high rounded-2xl px-4 py-3 text-sm font-medium mb-8">
@@ -94,7 +94,7 @@ function verifyWebhook(rawBody, signature, secret) {
       <section>
         <h3 className="text-xl font-bold text-ink mb-4">Retry Policy</h3>
         <p className="text-slate leading-relaxed">
-          Vero retries failed webhook deliveries (non-2xx responses) up to <strong className="text-ink">3 times</strong> with exponential backoff — at 30s, 5min, and 30min. 
+          Vero retries failed webhook deliveries (non-2xx responses) up to <strong className="text-ink">3 times</strong> with exponential backoff: at 30s, 5min, and 30min. 
           After 3 failures, the event is dropped and logged in your Dashboard for inspection.
           Your endpoint must respond within <strong className="text-ink">10 seconds</strong> or the delivery is considered failed.
         </p>

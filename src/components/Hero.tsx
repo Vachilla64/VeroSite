@@ -43,7 +43,7 @@ const PROFILES = [
     label: 'Caution',
     color: '#FFC300',
     bgClass: 'bg-gradient-to-br from-[#FFC300] to-[#FFD84D]',
-    text: 'Mixed history — mostly on-time, one recent delayed delivery report.',
+    text: 'Mixed history: mostly on-time, one recent delayed delivery report.',
     tags: ['Delayed once'],
     icon: AlertTriangle,
     iconColor: 'text-risk-neutral',
@@ -172,12 +172,12 @@ export default function Hero() {
               Live in Nigeria & Kenya
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-ink leading-[1.1] mb-6 tracking-tight">
-              Know who you're paying. <br className="hidden md:block"/>
-              <span className="text-trust-high">Before you pay.</span>
+              Vero scores bank accounts before money leaves your platform. <br className="hidden md:block"/>
+              <span className="text-trust-high">Stop scams at checkout.</span>
             </h1>
             <p className="text-lg text-slate mb-8 leading-relaxed max-w-lg">
-              Vero intercepts bank transfers to provide a 0-100 Trust Score and an AI-driven risk explanation. 
-              <strong className="text-ink font-semibold"> Stop scams at checkout.</strong>
+              You get a 0 to 100 trust rating and instant fraud checks.
+              <strong className="text-ink font-semibold"> Never pay a scammer again.</strong>
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <Link to="/developer" className="flex items-center gap-2 bg-trust-high text-surface px-6 py-3.5 rounded-pill font-bold shadow-soft hover:opacity-90 transition-all hover:-translate-y-0.5">
