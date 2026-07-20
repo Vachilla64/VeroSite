@@ -40,7 +40,7 @@ export default function LookupAPI() {
           <Code className="w-5 h-5 text-trust-high" /> API Reference
         </h2>
         <p className="text-slate mb-8 leading-relaxed">
-          The Vero API exposes three core endpoints. All endpoints require a valid Bearer token obtained from the Auth endpoints.
+          The Vero API exposes three core endpoints. We recommend using an <strong className="text-ink">API Key</strong> (<code className="bg-app-surface px-1.5 py-0.5 rounded text-sm font-mono">x-api-key</code>) for backend requests, but valid Bearer tokens are also accepted.
         </p>
 
         <div className="flex items-center gap-3 mb-2">
@@ -92,7 +92,7 @@ export default function LookupAPI() {
           <div>
             <h4 className="font-bold text-ink mb-3 text-sm uppercase tracking-wider">Request</h4>
             <CodeBlock>{`curl -X POST https://api.verotrust.com/api/verify \\
-  -H "Authorization: Bearer <token>" \\
+  -H "x-api-key: vero_live_your_api_key_here" \\
   -H "Content-Type: application/json" \\
   -d '{
     "nuban": "0123456789",
@@ -240,7 +240,7 @@ export default function LookupAPI() {
           <div>
             <h4 className="font-bold text-ink mb-3 text-sm uppercase tracking-wider">Request</h4>
             <CodeBlock>{`curl -X POST https://api.verotrust.com/api/report \\
-  -H "Authorization: Bearer <token>" \\
+  -H "x-api-key: vero_live_your_api_key_here" \\
   -H "Content-Type: application/json" \\
   -d '{
     "nuban": "8877665544",
@@ -275,7 +275,7 @@ export default function LookupAPI() {
           <div>
             <h4 className="font-bold text-ink mb-3 text-sm uppercase tracking-wider">Request</h4>
             <CodeBlock>{`curl https://api.verotrust.com/api/history \\
-  -H "Authorization: Bearer <token>"`}</CodeBlock>
+  -H "x-api-key: vero_live_your_api_key_here"`}</CodeBlock>
           </div>
           <div>
             <h4 className="font-bold text-ink mb-3 text-sm uppercase tracking-wider">Response (200 OK)</h4>

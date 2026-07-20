@@ -1,6 +1,15 @@
 import { CheckCircle2, XCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function WebhookTable() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fake network delay for polish
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   const deliveries = [
     { id: 'evt_19xj29', type: 'score.calculated', status: 200, time: '2 mins ago', ms: 142 },
     { id: 'evt_98kx2m', type: 'score.calculated', status: 200, time: '15 mins ago', ms: 98 },
@@ -28,25 +37,38 @@ export default function WebhookTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-hairline">
-            {deliveries.map((del) => (
-              <tr key={del.id} className="hover:bg-canvas/30 transition-colors">
-                <td className="px-6 py-4 font-mono text-xs text-ink">{del.id}</td>
-                <td className="px-6 py-4 text-ink font-medium">{del.type}</td>
-                <td className="px-6 py-4">
-                  {del.status === 200 ? (
-                    <div className="flex items-center gap-1.5 text-trust-high bg-trust-high/10 w-max px-2.5 py-1 rounded-full text-xs font-bold">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> 200 OK
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5 text-risk-critical bg-risk-critical/10 w-max px-2.5 py-1 rounded-full text-xs font-bold">
-                      <XCircle className="w-3.5 h-3.5" /> 500 ERR
-                    </div>
-                  )}
-                </td>
-                <td className="px-6 py-4 text-slate">{del.ms}ms</td>
-                <td className="px-6 py-4 text-slate whitespace-nowrap">{del.time}</td>
-              </tr>
-            ))}
+            {loading ? (
+              // Skeleton Rows
+              Array.from({ length: 5 }).map((_, i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="px-6 py-4"><div className="h-4 bg-app-surface rounded w-20"></div></td>
+                  <td className="px-6 py-4"><div className="h-4 bg-app-surface rounded w-28"></div></td>
+                  <td className="px-6 py-4"><div className="h-6 bg-app-surface rounded-full w-20"></div></td>
+                  <td className="px-6 py-4"><div className="h-4 bg-app-surface rounded w-10"></div></td>
+                  <td className="px-6 py-4"><div className="h-4 bg-app-surface rounded w-16"></div></td>
+                </tr>
+              ))
+            ) : (
+              deliveries.map((del) => (
+                <tr key={del.id} className="hover:bg-canvas/30 transition-colors">
+                  <td className="px-6 py-4 font-mono text-xs text-ink">{del.id}</td>
+                  <td className="px-6 py-4 text-ink font-medium">{del.type}</td>
+                  <td className="px-6 py-4">
+                    {del.status === 200 ? (
+                      <div className="flex items-center gap-1.5 text-trust-high bg-trust-high/10 w-max px-2.5 py-1 rounded-full text-xs font-bold">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> 200 OK
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-risk-critical bg-risk-critical/10 w-max px-2.5 py-1 rounded-full text-xs font-bold">
+                        <XCircle className="w-3.5 h-3.5" /> 500 ERR
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-slate">{del.ms}ms</td>
+                  <td className="px-6 py-4 text-slate whitespace-nowrap">{del.time}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
