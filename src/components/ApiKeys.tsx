@@ -1,52 +1,15 @@
 import { Copy, Eye, EyeOff, RefreshCw } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+interface ApiKeysProps {
+  apiKey: string;
+  loading: boolean;
+  rollKey: () => void;
+}
 
-export default function ApiKeys() {
+export default function ApiKeys({ apiKey, loading, rollKey }: ApiKeysProps) {
   const [copied, setCopied] = useState(false);
-  const [apiKey, setApiKey] = useState<string>("Loading...");
   const [isRevealed, setIsRevealed] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const token = localStorage.getItem('vero_token');
-
-  const fetchKeys = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/developer/keys`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      if (res.ok && data.length > 0) {
-        setApiKey(data[0].key);
-      } else {
-        setApiKey("No active key");
-      }
-    } catch (err) {
-      setApiKey("Failed to load key");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (token) fetchKeys();
-  }, [token]);
-
-  const rollKey = async () => {
-    if (!confirm("Are you sure? This will invalidate your old API key immediately.")) return;
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/api/developer/keys/roll`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      if (res.ok) setApiKey(data.key);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(apiKey);

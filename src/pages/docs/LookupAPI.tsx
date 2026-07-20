@@ -35,7 +35,7 @@ export default function LookupAPI() {
     <div className="space-y-12 animate-[fade-in_0.3s_ease-out]">
 
       {/* ── POST /api/verify ── */}
-      <section>
+      <section id="verify">
         <h2 className="text-2xl font-bold text-ink mb-2 flex items-center gap-2">
           <Code className="w-5 h-5 text-trust-high" /> API Reference
         </h2>
@@ -196,7 +196,7 @@ export default function LookupAPI() {
       <div className="h-px bg-hairline" />
 
       {/* ── POST /api/report ── */}
-      <section>
+      <section id="report">
         <div className="flex items-center gap-3 mb-2">
           <Badge method="POST" />
           <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/report</code>
@@ -260,7 +260,7 @@ export default function LookupAPI() {
       <div className="h-px bg-hairline" />
 
       {/* ── GET /api/history ── */}
-      <section>
+      <section id="history">
         <div className="flex items-center gap-3 mb-2">
           <Badge method="GET" />
           <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/history</code>
