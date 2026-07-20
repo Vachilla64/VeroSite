@@ -53,13 +53,24 @@ export default function DocsLayout() {
                   <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold">GET</span>
                   /api/history
                 </NavLink>
+                <NavLink to="/docs/authentication" className={inactiveClass + " flex items-center gap-2"}>
+                  <span className="text-[10px] bg-trust-high/20 text-trust-high px-1.5 py-0.5 rounded font-bold">POST</span>
+                  /api/developer/keys/roll
+                </NavLink>
+                <NavLink to="/docs/authentication" className={inactiveClass + " flex items-center gap-2"}>
+                  <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold">GET</span>
+                  /api/developer/keys
+                </NavLink>
               </ul>
             </div>
 
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-slate mb-3">Integration</h4>
               <ul className="space-y-2 flex flex-col">
-                <NavLink to="/docs/webhooks" className={({isActive}) => isActive ? activeClass : inactiveClass}>Webhooks</NavLink>
+                <NavLink to="/docs/webhooks" className={({isActive}) => (isActive ? activeClass : inactiveClass) + " flex items-center gap-2"}>
+                  Webhooks
+                  <span className="text-[9px] bg-risk-high/15 text-risk-high px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Soon</span>
+                </NavLink>
                 <NavLink to="/docs/errors" className={({isActive}) => isActive ? activeClass : inactiveClass}>Error Codes</NavLink>
               </ul>
             </div>

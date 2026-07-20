@@ -6,10 +6,13 @@ const errors = [
     code: '400',
     name: 'Bad Request',
     causes: [
-      { error: 'Missing nuban or amount', endpoint: '/api/verify', detail: 'Both fields are required.' },
-      { error: 'Invalid NUBAN format', endpoint: '/api/verify, /api/report', detail: 'NUBAN must be exactly 10 digits.' },
+      { error: 'Missing nuban or amount', endpoint: '/api/verify', detail: 'Both fields are required. Note: a badly formatted NUBAN is NOT a 400 here — it returns 200 with score 0 and the invalid_format flag.' },
       { error: 'Missing nuban or reason', endpoint: '/api/report', detail: 'Both fields are required.' },
-      { error: 'You cannot report your own account.', endpoint: '/api/report', detail: 'Self-reporting is blocked.' },
+      { error: 'Invalid NUBAN format', endpoint: '/api/report', detail: 'NUBAN must be exactly 10 digits. This hard check applies to /api/report only.' },
+      { error: 'You cannot report your own account.', endpoint: '/api/report', detail: 'Self-reporting an account you already own is blocked.' },
+      { error: 'Missing required fields', endpoint: '/api/auth/register', detail: 'email, password and name are all mandatory.' },
+      { error: 'Missing email or password', endpoint: '/api/auth/login', detail: 'Both fields are required.' },
+      { error: 'Nothing to update', endpoint: '/api/user/settings', detail: 'Send at least one of name or password.' },
     ],
     color: 'text-risk-high',
     bg: 'bg-risk-high/10',
@@ -18,8 +21,8 @@ const errors = [
     code: '401',
     name: 'Unauthorized',
     causes: [
-      { error: 'Invalid credentials', endpoint: '/api/auth/login', detail: 'Email or password is incorrect.' },
-      { error: 'Token missing or invalid', endpoint: 'All protected routes', detail: 'Provide a valid Bearer token in the Authorization header.' },
+      { error: 'Invalid credentials', endpoint: '/api/auth/login', detail: 'Email or password is incorrect. The two cases are deliberately indistinguishable.' },
+      { error: 'Authorization header or x-api-key missing', endpoint: 'All protected routes', detail: 'You sent neither credential. Add x-api-key, or Authorization: Bearer <jwt>. A credential that is present but bad is a 403, not a 401.' },
     ],
     color: 'text-risk-critical',
     bg: 'bg-risk-critical/10',
@@ -28,7 +31,10 @@ const errors = [
     code: '403',
     name: 'Forbidden',
     causes: [
-      { error: 'LIMIT_REACHED', endpoint: '/api/verify', detail: 'Free plan daily limit of 15 checks reached. Upgrade to Pro for unlimited calls.' },
+      { error: 'Invalid or revoked API key', endpoint: 'All protected routes', detail: 'The x-api-key is unknown or was deactivated — most often because a newer key was rolled, which deactivates all previous keys. Roll again and redeploy.' },
+      { error: 'Invalid or expired token', endpoint: 'All protected routes', detail: 'The Bearer token failed verification or is past its 24-hour lifetime. Log in again.' },
+      { error: 'Cannot manage API keys using an API key', endpoint: '/api/developer/keys, /api/developer/keys/roll', detail: 'Key management requires a JWT user session. An API key can never mint or list keys.' },
+      { error: 'LIMIT_REACHED', endpoint: '/api/verify', detail: 'Non-premium JWT session hit the 15-lookup daily cap. Callers using x-api-key are exempt and never see this.' },
     ],
     color: 'text-risk-critical',
     bg: 'bg-risk-critical/10',
@@ -37,7 +43,8 @@ const errors = [
     code: '404',
     name: 'Not Found',
     causes: [
-      { error: 'User not found', endpoint: '/api/verify', detail: 'The authenticated user record no longer exists.' },
+      { error: 'User not found', endpoint: '/api/verify, /api/user/profile', detail: 'The authenticated user record no longer exists.' },
+      { error: 'Not found', endpoint: 'Any unrecognised path', detail: 'Catch-all for a route that does not exist. Check the path and that you are hitting https://api-vero.up.railway.app.' },
     ],
     color: 'text-slate',
     bg: 'bg-app-surface',
@@ -88,6 +95,12 @@ export default function Errors() {
   "error": "LIMIT_REACHED",
   "message": "You have reached your daily limit of 15 free checks. Please upgrade to Pro."
 }`}</code></pre>
+        </div>
+        <div className="bg-app-surface border border-hairline rounded-2xl px-4 py-3 text-sm text-slate leading-relaxed">
+          <strong className="text-ink">401 vs 403.</strong> Vero returns <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">401</code> only
+          when <em>no</em> credential was supplied. A credential that is supplied but rejected — expired token, revoked key, wrong credential type
+          for the endpoint — is always a <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">403</code>.
+          Retry logic should treat 403 as "re-authenticate", not as a permanent denial.
         </div>
       </section>
 

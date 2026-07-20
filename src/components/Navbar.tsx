@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ChevronRight, Menu, X } from 'lucide-react';
+import { ChevronRight, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,7 +23,7 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-sm font-medium text-slate hover:text-ink transition-colors">Platform</Link>
-          <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-slate hover:text-ink transition-colors">Consumer App</a>
+          <a href="https://verolive.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-slate hover:text-ink transition-colors">Consumer App</a>
           <Link to="/pricing" className="text-sm font-medium text-slate hover:text-ink transition-colors">Pricing</Link>
           <Link to="/docs" className="text-sm font-medium text-slate hover:text-ink transition-colors">Docs</Link>
           <Link to="/developer" className="flex items-center gap-2 bg-trust-high text-surface px-5 py-2.5 rounded-pill text-sm font-bold shadow-soft hover:opacity-90 transition-all hover:scale-105">
@@ -44,7 +44,7 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-24 left-4 right-4 bg-surface rounded-2xl shadow-soft border border-hairline p-4 flex flex-col gap-4">
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="px-4 py-2 text-sm font-medium text-ink hover:bg-canvas rounded-lg">Platform</Link>
-          <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="px-4 py-2 text-sm font-medium text-ink hover:bg-canvas rounded-lg">Consumer App</a>
+          <a href="https://verolive.vercel.app" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="px-4 py-2 text-sm font-medium text-ink hover:bg-canvas rounded-lg">Consumer App</a>
           <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="px-4 py-2 text-sm font-medium text-ink hover:bg-canvas rounded-lg">Pricing</Link>
           <Link to="/docs" onClick={() => setMobileMenuOpen(false)} className="px-4 py-2 text-sm font-medium text-ink hover:bg-canvas rounded-lg">Docs</Link>
           <Link to="/developer" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center gap-2 bg-trust-high text-surface px-5 py-3 rounded-pill text-sm font-bold mt-2">

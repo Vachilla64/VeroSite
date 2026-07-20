@@ -21,11 +21,20 @@ export default function WebhookTable() {
   return (
     <div className="bg-surface rounded-[32px] shadow-card border border-hairline overflow-hidden">
       <div className="p-6 md:p-8 border-b border-hairline">
-        <h3 className="font-bold text-ink">Recent Webhook Deliveries</h3>
-        <p className="text-xs text-slate mt-1">Endpoint: https://api.yourplatform.com/vero-webhooks</p>
+        <div className="flex items-center gap-2.5 mb-1">
+          <h3 className="font-bold text-ink">Webhook Deliveries</h3>
+          <span className="bg-risk-high/15 text-risk-high px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+            Preview — not live
+          </span>
+        </div>
+        <p className="text-xs text-slate mt-1">
+          Webhooks are not implemented yet. The rows below are placeholder data illustrating the planned view — no events
+          are being delivered and no endpoint is registered.{' '}
+          <a href="/docs/webhooks" className="text-trust-high font-semibold hover:underline">Read more</a>
+        </p>
       </div>
-      
-      <div className="overflow-x-auto">
+
+      <div className="overflow-x-auto opacity-60 pointer-events-none select-none">
         <table className="w-full text-left text-sm">
           <thead className="bg-canvas/50 text-slate text-xs uppercase tracking-wider">
             <tr>
@@ -74,7 +83,7 @@ export default function WebhookTable() {
       </div>
       
       <div className="p-4 border-t border-hairline bg-canvas/30 text-center">
-        <button className="text-sm font-semibold text-ink hover:text-risk-critical transition-colors">View All Events</button>
+        <span className="text-sm font-semibold text-slate">Available once webhooks ship</span>
       </div>
     </div>
   );

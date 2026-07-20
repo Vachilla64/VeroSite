@@ -104,7 +104,7 @@ export default function Hero() {
             <Link to="/developer" className="flex items-center gap-2 bg-trust-high text-surface px-6 py-3.5 rounded-pill font-bold shadow-soft hover:opacity-90 transition-all hover:-translate-y-0.5">
               Get API Keys <ChevronRight className="w-4 h-4" />
             </Link>
-            <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-ink bg-surface shadow-sm border border-hairline px-6 py-3.5 rounded-pill font-semibold hover:border-slate/30 hover:bg-app-surface transition-colors">
+            <a href="https://verolive.vercel.app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-ink bg-surface shadow-sm border border-hairline px-6 py-3.5 rounded-pill font-semibold hover:border-slate/30 hover:bg-app-surface transition-colors">
               Try the Web App
             </a>
           </div>
@@ -112,7 +112,7 @@ export default function Hero() {
 
         {/* Right Visuals - Static Demo Mockup linked to Web App */}
         <div className="relative mt-8 lg:mt-0 perspective-1000 z-10 group cursor-pointer">
-          <a href="https://veroapp.vercel.app" target="_blank" rel="noopener noreferrer" className="block relative">
+          <a href="https://verolive.vercel.app" target="_blank" rel="noopener noreferrer" className="block relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-trust-high/5 blur-[100px] -z-10 rounded-full group-hover:bg-trust-high/10 transition-colors duration-500"></div>
             
             {/* Overlay CTA on hover */}

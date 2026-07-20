@@ -5,8 +5,13 @@ export default function MetricsChart() {
     <div className="bg-surface rounded-[32px] p-6 md:p-8 shadow-card border border-hairline">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="font-bold text-ink mb-1">API Usage</h3>
-          <p className="text-xs text-slate">This billing cycle</p>
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="font-bold text-ink">API Usage</h3>
+            <span className="bg-risk-high/15 text-risk-high px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+              Sample data
+            </span>
+          </div>
+          <p className="text-xs text-slate">Usage reporting is not wired up yet — figures below are illustrative.</p>
         </div>
         <div className="bg-app-surface p-2 rounded-xl">
           <BarChart3 className="w-5 h-5 text-ink" />

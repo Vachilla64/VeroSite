@@ -90,7 +90,12 @@ export default function Dashboard() {
             <Key size={48} />
           </div>
           <h2 className="text-2xl font-bold text-ink text-center mb-2">Developer Login</h2>
-          <p className="text-sm text-slate text-center mb-8">Use your standard Vero account to access the API.</p>
+          <p className="text-sm text-slate text-center mb-6">Use your standard Vero account to access the API.</p>
+          <div className="bg-app-surface border border-hairline rounded-xl px-4 py-3 text-xs text-slate mb-6 leading-relaxed">
+            Just exploring? The seeded demo account is{' '}
+            <span className="font-mono text-ink">clean@vero.net</span> /{' '}
+            <span className="font-mono text-ink">password123</span>.
+          </div>
           
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -170,8 +175,9 @@ export default function Dashboard() {
             <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold bg-trust-high text-white rounded-xl shadow-btn-green">
               <Key className="w-4 h-4" /> API Keys
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate hover:bg-canvas rounded-xl transition-colors">
+            <button disabled className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate/50 rounded-xl cursor-not-allowed">
               <Activity className="w-4 h-4" /> Webhooks
+              <span className="ml-auto text-[9px] bg-risk-high/15 text-risk-high px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Soon</span>
             </button>
             <div className="my-4 border-t border-hairline"></div>
             <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate hover:bg-canvas rounded-xl transition-colors">

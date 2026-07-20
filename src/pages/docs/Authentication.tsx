@@ -27,8 +27,16 @@ export default function Authentication() {
           <Key className="w-5 h-5 text-trust-high" /> Authentication
         </h2>
         <p className="text-slate mb-6 leading-relaxed">
-          Vero supports two methods of authentication: <strong className="text-ink">API Keys</strong> for server-to-server B2B integrations, and <strong className="text-ink">Stateful JWTs</strong> for client-side sessions.
+          Every protected endpoint accepts <strong className="text-ink">either</strong> of two credentials. Send one of them, never both:
+          an <strong className="text-ink">API key</strong> in <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">x-api-key</code> for
+          server-to-server B2B integrations, or a <strong className="text-ink">JWT</strong> in{' '}
+          <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">Authorization: Bearer</code> for user sessions.
         </p>
+        <div className="bg-app-surface border border-hairline rounded-2xl px-4 py-3 text-sm text-slate leading-relaxed">
+          If <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">x-api-key</code> is present it is checked first
+          and the <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">Authorization</code> header is ignored.
+          Sending neither returns <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">401</code>.
+        </div>
       </section>
 
       <section>
@@ -36,11 +44,68 @@ export default function Authentication() {
           1. API Keys (Recommended for Servers)
         </h3>
         <p className="text-slate mb-4 leading-relaxed">
-          For backend integrations, include your live API key in the <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">x-api-key</code> header. You can generate API keys from the Developer Dashboard.
+          For backend integrations, include your live API key in the <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">x-api-key</code> header.
+          Keys are the literal prefix <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">vero_live_</code> followed by 32 hex characters,
+          and they do not expire — they stay valid until rolled.
         </p>
-        <CodeBlock>{`x-api-key: vero_live_xxxxxxxxxxxxxxxxxxxx`}</CodeBlock>
+        <CodeBlock>{`x-api-key: vero_live_4f9c2ab7e1d0835a6b4c9e2f7a1d8b30`}</CodeBlock>
         <div className="bg-risk-high/10 border border-risk-high/20 text-risk-high rounded-2xl px-4 py-3 text-sm font-medium mt-4">
           ⚠ Never expose your live API keys in client-side code (browsers or mobile apps). Use JWTs instead.
+        </div>
+
+        <h4 className="text-lg font-bold text-ink mb-3 mt-8">A. Roll a key</h4>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="bg-trust-high/20 text-trust-high px-2 py-1 rounded text-xs font-bold tracking-wide">POST</span>
+          <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/developer/keys/roll</code>
+        </div>
+        <p className="text-slate mb-4 leading-relaxed">
+          Generates a new key and returns it in full. This is the only time the key is returned to you in a create response — store it immediately.
+        </p>
+        <div className="bg-risk-high/10 border border-risk-high/20 text-risk-high rounded-2xl px-4 py-3 text-sm font-medium mb-4">
+          ⚠ Rolling <strong>deactivates every existing active key</strong> on your account first. Any integration still using the old key
+          starts receiving <code className="font-mono">403</code> immediately.
+        </div>
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <CodeBlock>{`curl -X POST \\
+  https://api-vero.up.railway.app/api/developer/keys/roll \\
+  -H "Authorization: Bearer eyJhbGci..."`}</CodeBlock>
+          <CodeBlock>{`// 201 Created
+{
+  "id": "cuid_...",
+  "key": "vero_live_4f9c2ab7e1d0835a6b4c9e2f7a1d8b30",
+  "isActive": true,
+  "createdAt": "2026-07-20T09:12:44.108Z",
+  "userId": "cuid_..."
+}`}</CodeBlock>
+        </div>
+
+        <h4 className="text-lg font-bold text-ink mb-3 mt-8">B. List active keys</h4>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold tracking-wide">GET</span>
+          <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/developer/keys</code>
+        </div>
+        <p className="text-slate mb-4 leading-relaxed">
+          Returns an array of your active keys, newest first. Deactivated keys are not included.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <CodeBlock>{`curl https://api-vero.up.railway.app/api/developer/keys \\
+  -H "Authorization: Bearer eyJhbGci..."`}</CodeBlock>
+          <CodeBlock>{`// 200 OK
+[
+  {
+    "id": "cuid_...",
+    "key": "vero_live_4f9c2ab7e1d0835a6b4c9e2f7a1d8b30",
+    "isActive": true,
+    "createdAt": "2026-07-20T09:12:44.108Z",
+    "userId": "cuid_..."
+  }
+]`}</CodeBlock>
+        </div>
+        <div className="bg-app-surface border border-hairline rounded-2xl px-4 py-3 text-sm text-slate leading-relaxed">
+          <strong className="text-ink">Both key-management endpoints require a JWT.</strong> Authenticating them with{' '}
+          <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">x-api-key</code> returns{' '}
+          <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">403 "Cannot manage API keys using an API key"</code>.
+          A key can never mint or read another key.
         </div>
       </section>
 
@@ -61,13 +126,19 @@ export default function Authentication() {
           <span className="bg-trust-high/20 text-trust-high px-2 py-1 rounded text-xs font-bold tracking-wide">POST</span>
           <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/auth/register</code>
         </div>
-        <p className="text-slate mb-4 leading-relaxed">Create a new platform account. No API key required.</p>
+        <p className="text-slate mb-4 leading-relaxed">
+          Create a new platform account. No authentication required. All three fields are mandatory —
+          omitting any returns <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">400 "Missing required fields"</code>.
+        </p>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <CodeBlock>{`{
-  "name": "Acme Corp",
-  "email": "dev@acmecorp.com",
-  "password": "super-secret-pw"
-}`}</CodeBlock>
+          <CodeBlock>{`curl -X POST \\
+  https://api-vero.up.railway.app/api/auth/register \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "name": "Acme Corp",
+    "email": "dev@acmecorp.com",
+    "password": "super-secret-pw"
+  }'`}</CodeBlock>
           <CodeBlock>{`// 201 Created
 {
   "token": "eyJhbGci...",
@@ -93,12 +164,25 @@ export default function Authentication() {
           <span className="bg-trust-high/20 text-trust-high px-2 py-1 rounded text-xs font-bold tracking-wide">POST</span>
           <code className="text-sm font-mono text-ink bg-surface px-2 py-1 rounded border border-hairline">/api/auth/login</code>
         </div>
-        <p className="text-slate mb-4 leading-relaxed">Exchange credentials for a 24-hour Bearer token.</p>
+        <p className="text-slate mb-4 leading-relaxed">
+          Exchange credentials for a 24-hour Bearer token. Wrong email or password returns{' '}
+          <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">401 "Invalid credentials"</code> —
+          the two cases are deliberately indistinguishable.
+        </p>
+        <div className="bg-app-surface border border-hairline rounded-2xl px-4 py-3 text-sm text-slate mb-4 leading-relaxed">
+          Trying things out? The demo user{' '}
+          <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">clean@vero.net</code> /{' '}
+          <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">password123</code>{' '}
+          is seeded on the live API.
+        </div>
         <div className="grid md:grid-cols-2 gap-4">
-          <CodeBlock>{`{
-  "email": "dev@acmecorp.com",
-  "password": "super-secret-pw"
-}`}</CodeBlock>
+          <CodeBlock>{`curl -X POST \\
+  https://api-vero.up.railway.app/api/auth/login \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "email": "clean@vero.net",
+    "password": "password123"
+  }'`}</CodeBlock>
           <CodeBlock>{`// 200 OK
 {
   "token": "eyJhbGci...",
@@ -119,6 +203,11 @@ export default function Authentication() {
           Include your token in the <code className="bg-app-surface px-1.5 py-0.5 rounded border border-hairline text-sm font-mono">Authorization</code> header of every subsequent request.
         </p>
         <CodeBlock>{`Authorization: Bearer eyJhbGci...`}</CodeBlock>
+        <div className="bg-app-surface border border-hairline rounded-2xl px-4 py-3 text-sm text-slate mt-4 leading-relaxed">
+          An expired or malformed token returns{' '}
+          <code className="bg-surface px-1.5 py-0.5 rounded text-xs font-mono border border-hairline">403 "Invalid or expired token"</code>,
+          not a 401. Treat a 403 on a previously-working token as "re-authenticate", and log in again for a fresh 24-hour token.
+        </div>
       </section>
 
       <NextPrevNav

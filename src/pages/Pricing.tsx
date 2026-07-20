@@ -17,8 +17,8 @@ export default function Pricing() {
             <span className="text-4xl font-black text-ink">Free</span>
           </div>
           <ul className="space-y-4 mb-8 flex-1">
-            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> 500 API calls/mo</li>
-            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Standard endpoints</li>
+            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> 15 lookups/day</li>
+            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Verify, report &amp; history endpoints</li>
             <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Community support</li>
           </ul>
           <button className="w-full py-3 rounded-pill bg-app-surface text-ink font-bold hover:bg-hairline transition-colors">Get API Keys</button>
@@ -34,9 +34,9 @@ export default function Pricing() {
             <span className="text-slate">/mo</span>
           </div>
           <ul className="space-y-4 mb-8 flex-1">
-            <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> 10,000 API calls/mo</li>
-            <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> Real-time webhooks</li>
-            <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> Fraud insights dashboard</li>
+            <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> Uncapped server-to-server lookups</li>
+            <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> API key management &amp; rolling</li>
+            <li className="flex items-center gap-3 text-sm text-slate"><Check className="w-4 h-4 text-slate/60" /> Real-time webhooks <span className="text-[10px] font-bold uppercase tracking-wider text-risk-high">Soon</span></li>
             <li className="flex items-center gap-3 text-sm text-surface"><Check className="w-4 h-4 text-trust-high" /> Dedicated support</li>
           </ul>
           <button className="w-full py-3 rounded-pill bg-trust-high text-surface font-bold hover:bg-trust-high/90 shadow-lg shadow-trust-high/20 transition-all hover:scale-105">Start 14-Day Trial</button>
@@ -51,13 +51,19 @@ export default function Pricing() {
           </div>
           <ul className="space-y-4 mb-8 flex-1">
             <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Unlimited volume</li>
-            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Custom ML models</li>
-            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> 99.99% SLA</li>
+            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Custom scoring weights</li>
+            <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Negotiated SLA</li>
             <li className="flex items-center gap-3 text-sm text-ink"><Check className="w-4 h-4 text-trust-high" /> Solution architect</li>
           </ul>
           <button className="w-full py-3 rounded-pill bg-app-surface text-ink font-bold hover:bg-hairline transition-colors">Contact Sales</button>
         </div>
       </div>
+
+      <p className="text-center text-xs text-slate mt-12 max-w-2xl mx-auto leading-relaxed">
+        Billing is not live yet. Today every account is on the free tier: 15 lookups per day for signed-in user sessions,
+        and no cap at all for server-to-server calls authenticated with an{' '}
+        <code className="font-mono">x-api-key</code>. Items marked <span className="text-risk-high font-bold uppercase tracking-wider">Soon</span> are not yet implemented.
+      </p>
     </div>
   );
 }

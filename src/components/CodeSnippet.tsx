@@ -18,17 +18,19 @@ export default function CodeSnippet() {
         {/* Code Content */}
         <div className="p-5 md:p-6 text-sm font-mono text-slate/80 overflow-x-auto">
 <pre><code>
-<span className="text-pink-400">const</span> <span className="text-blue-300">response</span> = <span className="text-pink-400">await</span> vero.<span className="text-green-300">verify</span>({`{`}
-  <span className="text-slate-300">nuban:</span> <span className="text-yellow-300">'0123456789'</span>,
-  <span className="text-slate-300">amount:</span> <span className="text-purple-300">50000</span>
+<span className="text-pink-400">const</span> <span className="text-blue-300">res</span> = <span className="text-pink-400">await</span> <span className="text-green-300">fetch</span>(<span className="text-yellow-300">'https://api-vero.up.railway.app/api/verify'</span>, {`{`}
+  <span className="text-slate-300">method:</span> <span className="text-yellow-300">'POST'</span>,
+  <span className="text-slate-300">headers:</span> {`{`} <span className="text-yellow-300">'x-api-key'</span>: key, <span className="text-yellow-300">'Content-Type'</span>: <span className="text-yellow-300">'application/json'</span> {`}`},
+  <span className="text-slate-300">body:</span> <span className="text-blue-300">JSON</span>.<span className="text-green-300">stringify</span>({`{`} <span className="text-slate-300">nuban:</span> <span className="text-yellow-300">'1000000021'</span>, <span className="text-slate-300">amount:</span> <span className="text-purple-300">50000</span> {`}`})
 {`}`});
 
 <span className="text-slate-500">// Returns:</span>
 {`{`}
-  <span className="text-slate-300">"score"</span>: <span className="text-purple-300">30</span>,
+  <span className="text-slate-300">"score"</span>: <span className="text-purple-300">10</span>,
   <span className="text-slate-300">"flags"</span>: [
-    <span className="text-yellow-300">"multiple_reports_7d"</span>,
-    <span className="text-yellow-300">"new_account"</span>
+    <span className="text-yellow-300">"new_account"</span>,
+    <span className="text-yellow-300">"heavily_reported"</span>,
+    <span className="text-yellow-300">"critical_risk"</span>
   ],
   <span className="text-slate-300">"explanation"</span>: <span className="text-yellow-300">"Reported multiple times..."</span>
 {`}`}
@@ -41,7 +43,7 @@ export default function CodeSnippet() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-xs font-bold text-slate uppercase tracking-wider mb-0.5">Trust Score</p>
-            <p className="text-3xl font-black text-ink">30</p>
+            <p className="text-3xl font-black text-ink">10</p>
           </div>
           {/* Circular Meter Mockup */}
           <div className="relative w-14 h-14 flex items-center justify-center">
@@ -56,7 +58,7 @@ export default function CodeSnippet() {
               <path
                 className="text-risk-high"
                 strokeWidth="4"
-                strokeDasharray="30, 100"
+                strokeDasharray="10, 100"
                 strokeLinecap="round"
                 stroke="currentColor"
                 fill="none"
@@ -69,11 +71,11 @@ export default function CodeSnippet() {
         <div className="space-y-2">
           <div className="flex items-start gap-2 bg-risk-critical/5 p-2 rounded-lg border border-risk-critical/10">
             <div className="w-1.5 h-1.5 rounded-full bg-risk-critical mt-1.5 flex-shrink-0"></div>
-            <p className="text-xs font-medium text-ink leading-tight">Reported 3 times this month</p>
+            <p className="text-xs font-medium text-ink leading-tight">Heavily reported by other users</p>
           </div>
           <div className="flex items-start gap-2 bg-hairline/50 p-2 rounded-lg">
             <div className="w-1.5 h-1.5 rounded-full bg-slate mt-1.5 flex-shrink-0"></div>
-            <p className="text-xs text-slate leading-tight">Limited transaction history</p>
+            <p className="text-xs text-slate leading-tight">Account less than 7 days old</p>
           </div>
         </div>
       </div>
